@@ -1,0 +1,34 @@
+<!--
+
+  OccupyInter.net <http://occupyinter.net>
+  Copyfree 2011. Made for public use.
+
+  Developed by Greg Leuch <http://gleuch.com> and the Free Art & Technology Lab <http://fffff.at>.
+
+  ##################################################################################################
+
+-->
+<html><head>
+<title>OccupyInter.net</title>
+<script type="text/javascript" src="js/jquery.1.6.1.min.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
+<script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/contextmenu.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/tabs.js"></script>
+<script type="text/javascript" src="js/windows.js"></script>
+<script type="text/javascript">
+
+try {
+
+  OccupyInternet.dev_mode = true;
+  OccupyInternet.version = '0.1.0';
+  OccupyInternet.browser = 'chrome';
+
+  OccupyInternet.init();
+} catch(e) {
+  console.error('OccupyInter.net Error: '+ e)
+}
+
+</script>
+</head><body></body></html>
