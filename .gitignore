@@ -1,0 +1,6 @@
+.DS_Store
+._*
+chrome.pem
+*.crx
+*.safariextz
+*.xpi

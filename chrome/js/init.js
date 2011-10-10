@@ -11,6 +11,11 @@
 */
 
 var OccupyInternet = {
+  mode_types : {
+    peaceful : 'Calm and Peaceful',
+    mob : 'Loud and Crazy',
+    quiet : 'Quiet Time'
+  },
   
   init : function() {
     OccupyInternet.settings();
@@ -20,7 +25,7 @@ var OccupyInternet = {
   },
   
   settings : function() {
-    if (!localStorage.active) localStorage.active = 'on';
+    if (!localStorage.mode) localStorage.mode = 'peaceful';
     if (!localStorage.uuid) localStorage.uuid = jQuery.rand_str(24);
 
     if (OccupyInternet.dev_mode) {
@@ -33,15 +38,36 @@ var OccupyInternet = {
     localStorage.get_url = localStorage.app_url + '/site.json';
   },
 
-  enabled : function() {return (localStorage.active == 'on');},
+  enabled : function() {return (localStorage.mode != 'quiet');},
+  
+  isMode : function(m) {return (localStorage.mode == m);},
 
-  toggle : function(tab) {
-    localStorage.active = (localStorage.active == 'on' ? 'off' : 'on');
-    OccupyInternet.ContextMenu.update(tab);
+  setMode : function(info) {
+    var changed = false;
+    jQuery.each(OccupyInternet.mode_types, function(k,v) {
+      if (OccupyInternet.ContextMenu['mode_'+ k] == info['menuItemId']) {
+        OccupyInternet.mode(k);
+        changed = true;
+      }
+    });
 
-    // TODO!!!
-    // This should show/hide all instances in tabs!
+    if (changed) {
+      jQuery.each(OccupyInternet.Tabs.tabs, function(id, info) {
+        OccupyInternet.Protest.update_mode(id);
+      })
+    }
+  },
 
+  mode : function(m) {
+    var keys = [];
+    jQuery.each(OccupyInternet.mode_types, function(k,v) {keys.push(k);});
+
+    if (m && keys.indexOf(m) != -1) {
+      localStorage.mode = m;
+      OccupyInternet.ContextMenu.update();
+    }
+
+    return localStorage.mode;
   },
 
   url : function(url) {return (url || '').replace(/^(.*)(#.*?)$/, '$1');},

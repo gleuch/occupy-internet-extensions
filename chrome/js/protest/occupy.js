@@ -4,9 +4,10 @@ try {$.noConflict();} catch(e) {} // Play nice!
 if (typeof(OccupyInternetPage) == 'undefined') {
   var OccupyInternetPage = {
     count : 0,
+    mode : 'quiet',
+    dev_mode : false,
     fetched : false,
     gathered : false,
-    hidden : false,
     app_url : 'http://api.occupyinter.net',
     post_url : 'http://api.occupyinter.net/count.json',
     get_url : 'http://api.occupyinter.net/site.json'
@@ -44,15 +45,15 @@ jQuery.extend(true, OccupyInternetPage, {
 
   // Let us protest!
   protest : function() {
+    if (OccupyInternetPage.mode == 'quiet') return;
+
     if (!OccupyInternetPage.gathered) {
       jQuery('body').append(OccupyInternetPage.html.liberty_plaza);
-      if (!!OccupyInternetPage.hidden) jQuery('#occupyinternet_plaza').hide();
       OccupyInternetPage.gathered = true;
 
       for (var i=0; i<OccupyInternetPage.count; i++) {
         OccupyInternetPage._add_protester();
       }
-
     }
   },
   
@@ -95,6 +96,12 @@ jQuery.extend(true, OccupyInternetPage, {
     
   },
 
+  // If we switch modes, update the crowd!
+  switch_mode : function() {
+    if (jQuery('#occupyinternet_plaza')) jQuery('#occupyinternet_plaza').remove();
+    OccupyInternetPage.gathered = false;
+    OccupyInternetPage.protest();
+  },
 
   html : {
     protester : '<span class="occupyinternet occupyinternet_protester">X</span>',

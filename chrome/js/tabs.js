@@ -37,7 +37,7 @@ OccupyInternet.Tabs = {
       OccupyInternet.Tabs.tabs[tab.id].injected = false;
     }
     
-    if (tab['url'].match(/^(http)/)) OccupyInternet.Page.occupy(tab);
+    if (tab['url'].match(/^(http)/)) OccupyInternet.Protest.occupy(tab);
   },
   
   onRemove : function(tabid, removeinfo) {
