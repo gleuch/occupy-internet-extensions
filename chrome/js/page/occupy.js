@@ -1,4 +1,4 @@
-$.noConflict(); // Play nice!
+try {$.noConflict();} catch(e) {} // Play nice!
 
 
 if (typeof(OccupyInternetPage) == 'undefined') {
@@ -6,10 +6,13 @@ if (typeof(OccupyInternetPage) == 'undefined') {
     count : 0,
     fetched : false,
     gathered : false,
+    hidden : false,
     app_url : 'http://api.occupyinter.net',
     post_url : 'http://api.occupyinter.net/count.json',
     get_url : 'http://api.occupyinter.net/site.json'
   };
+
+  jQuery('.occupyinternet').remove();
 }
 
 
@@ -31,7 +34,7 @@ jQuery.extend(true, OccupyInternetPage, {
   // Repeat it back (success)
   _mic_check : function(msg) {
     OccupyInternetPage.count = msg.visits_count;
-    OccupyInternetProtest.protest();
+    OccupyInternetPage.protest();
   },
   
   // Getting some feedback from the mic (error)
@@ -43,6 +46,7 @@ jQuery.extend(true, OccupyInternetPage, {
   protest : function() {
     if (!OccupyInternetPage.gathered) {
       jQuery('body').append(OccupyInternetPage.html.liberty_plaza);
+      if (!!OccupyInternetPage.hidden) jQuery('#occupyinternet_plaza').hide();
       OccupyInternetPage.gathered = true;
 
       for (var i=0; i<OccupyInternetPage.count; i++) {
@@ -51,6 +55,9 @@ jQuery.extend(true, OccupyInternetPage, {
 
     }
   },
+  
+  _show_protest : function() {if (jQuery('#occupyinternet_plaza')) jQuery('#occupyinternet_plaza').show();},
+  _hide_protest : function() {if (jQuery('#occupyinternet_plaza')) jQuery('#occupyinternet_plaza').hide();},
 
   _add_protester : function() {
     jQuery('#occupyinternet_plaza').append(OccupyInternetPage.html.protester);

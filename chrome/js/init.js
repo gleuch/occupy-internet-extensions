@@ -20,11 +20,7 @@ var OccupyInternet = {
   },
   
   settings : function() {
-    if (!localStorage.active) {
-      OccupyInternet.active = 'on';
-      localStorage.active = OccupyInternet.active;
-    }
-
+    if (!localStorage.active) localStorage.active = 'on';
     if (!localStorage.uuid) localStorage.uuid = jQuery.rand_str(24);
 
     if (OccupyInternet.dev_mode) {
@@ -37,15 +33,23 @@ var OccupyInternet = {
     localStorage.get_url = localStorage.app_url + '/site.json';
   },
 
-  enabled : function() {return (OccupyInternet.active == 'on');},
+  enabled : function() {return (localStorage.active == 'on');},
 
   toggle : function(tab) {
-    OccupyInternet.active = (OccupyInternet.active == 'on' ? 'off' : 'on');
-    localStorage.active = OccupyInternet.active;
-    OccupyInternet.ContextMenu.toggle(tab);
+    localStorage.active = (localStorage.active == 'on' ? 'off' : 'on');
+    OccupyInternet.ContextMenu.update(tab);
+
+    // TODO!!!
+    // This should show/hide all instances in tabs!
+
   },
 
   url : function(url) {return (url || '').replace(/^(.*)(#.*?)$/, '$1');},
-  domain : function(url) {return (url || '').replace(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '$3');}
+  domain : function(url) {return (url || '').replace(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '$3');},
+
+  phrases : function(i,s,p) {
+    if (!p) p = s+'s';
+    return i +' '+ (i != 1 ? p : s);
+  }
 
 };
