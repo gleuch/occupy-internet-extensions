@@ -14,8 +14,7 @@ OccupyInternet.API = {
   
   update : function(opts) {
     var defaults = {success : function() {}, error : function() {}, data : {}},
-        // make it PUT!
-        requires = {url : localStorage.post_url, method : 'GET', dataType : 'json'};
+        requires = {url : localStorage.post_url, type : 'PUT', dataType : 'json'};
 
     if (!opts) opts = {};
     opts = jQuery.extend({}, defaults, opts, requires);

@@ -30,11 +30,11 @@ var OccupyInternet = {
     if (OccupyInternet.dev_mode) {
       localStorage.app_url = 'http://localhost:4567';
     } else {
-      localStorage.app_url = 'http://occupyinter.net';
+      localStorage.app_url = 'http://api.occupyinter.net';
     }
 
-    localStorage.post_url = localStorage.app_url +'/api/count.json';
-    localStorage.get_url = localStorage.app_url + '/api/site.json';
+    localStorage.post_url = localStorage.app_url +'/count.json';
+    localStorage.get_url = localStorage.app_url + '/site.json';
   },
 
   enabled : function() {return (OccupyInternet.active == 'on');},

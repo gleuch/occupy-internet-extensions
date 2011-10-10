@@ -48,12 +48,14 @@ OccupyInternet.Page = {
     if (OccupyInternet.Tabs.tabs[tab.id].injected) return false;
     OccupyInternet.Tabs.tabs[tab.id].injected = true;
 
+    var count = OccupyInternet.Tabs.tabs[tab.id].visits,
+        code = "OccupyInternetPage.count = "+ count +";OccupyInternetPage.fetched = true;OccupyInternetPage.init();";
 
-
-    // INJECTION HERE!
-
-
-
+    chrome.tabs.insertCSS(tab.id, {file:'css/page/occupy.css'}, function() {});
+    chrome.tabs.executeScript(tab.id, {file:'js/jquery.1.6.1.min.js'}, function() {});
+    chrome.tabs.executeScript(tab.id, {file:'js/page/occupy.js'}, function() {
+      chrome.tabs.executeScript(tab.id, {code:code}, function() {});
+    });
   }
 
 };
