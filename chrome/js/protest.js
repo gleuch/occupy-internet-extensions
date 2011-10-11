@@ -66,6 +66,10 @@ OccupyInternet.Protest = {
   update_mode : function(tabid) {
     var code = "if (typeof(OccupyInternetPage) != 'undefined') {OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"'; OccupyInternetPage.switch_mode();}";
     chrome.tabs.executeScript(parseInt(tabid), {code:code}, function() {});
+  },
+  
+  customize : function() {
+    chrome.tabs.create({selected:true, url:localStorage.app_url});
   }
 
 };

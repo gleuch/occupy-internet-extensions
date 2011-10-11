@@ -11,8 +11,7 @@
 */
 
 OccupyInternet.ContextMenu = {
-  protesters : null,
-  separator : null,
+  menus : {},
   
   init : function() {
     chrome.contextMenus.removeAll();
@@ -20,31 +19,32 @@ OccupyInternet.ContextMenu = {
   },
 
   create : function(tab) {  
-    if (!OccupyInternet.ContextMenu.protesters) {
-      OccupyInternet.ContextMenu.protesters = chrome.contextMenus.create({title : '0 Protesters', contexts : ['all'], onclick : OccupyInternet.toggle}, function() {});
+    if (!OccupyInternet.ContextMenu.menus.protesters) {
+      OccupyInternet.ContextMenu.menus.protesters = chrome.contextMenus.create({title : '0 Protesters', contexts : ['all'], onclick : OccupyInternet.toggle}, function() {});
     }
 
-    if (!OccupyInternet.ContextMenu.separator) {
-      OccupyInternet.ContextMenu.separator = chrome.contextMenus.create({type : 'separator', contexts : ['all']}, function() {});
+    if (!OccupyInternet.ContextMenu.menus.separator1) {
+      OccupyInternet.ContextMenu.menus.separator1 = chrome.contextMenus.create({type : 'separator', contexts : ['all']}, function() {});
     }
 
     jQuery.each(OccupyInternet.mode_types, function(k,v) {
-      if (!OccupyInternet.ContextMenu['mode_'+ k]) {
-        OccupyInternet.ContextMenu['mode_'+ k] = chrome.contextMenus.create({title : v, checked : OccupyInternet.isMode(k), type : 'checkbox', contexts : ['all'], onclick : OccupyInternet.setMode}, function() {});
+      if (!OccupyInternet.ContextMenu.menus['mode_'+ k]) {
+        OccupyInternet.ContextMenu.menus['mode_'+ k] = chrome.contextMenus.create({title : v, checked : OccupyInternet.isMode(k), type : 'checkbox', contexts : ['all'], onclick : OccupyInternet.setMode}, function() {});
       }
     });
+
+    if (!OccupyInternet.ContextMenu.menus.separator2) {
+      OccupyInternet.ContextMenu.menus.separator2 = chrome.contextMenus.create({type : 'separator', contexts : ['all']}, function() {});
+    }
+
+    if (!OccupyInternet.ContextMenu.menus.customize) {
+      OccupyInternet.ContextMenu.menus.customize = chrome.contextMenus.create({title : 'Goto OccupyInter.net', contexts : ['all'], onclick : OccupyInternet.Protest.customize}, function() {});
+    }
   },
   
   remove : function() {
-    if (OccupyInternet.ContextMenu.protesters) chrome.contextMenus.remove(OccupyInternet.ContextMenu.protesters);
-    if (OccupyInternet.ContextMenu.separator) chrome.contextMenus.remove(OccupyInternet.ContextMenu.separator);
-    delete OccupyInternet.ContextMenu.protesters;
-    delete OccupyInternet.ContextMenu.separator;
-
-    jQuery.each(OccupyInternet.mode_types, function(k,v) {
-      if (OccupyInternet.ContextMenu['mode_'+ k]) chrome.contextMenus.remove(OccupyInternet.ContextMenu['mode_'+ k]);
-      delete OccupyInternet.ContextMenu['mode_'+ k];
-    });
+    chrome.contextMenus.removeAll();
+    OccupyInternet.ContextMenu.menus = {};
   },
   
   toggle : function(tab) {
@@ -59,16 +59,16 @@ OccupyInternet.ContextMenu = {
   },
   
   update : function(tab) {
-    if (!OccupyInternet.ContextMenu.protesters || !OccupyInternet.ContextMenu.mode) OccupyInternet.ContextMenu.create();
+    OccupyInternet.ContextMenu.create(); // ensure
 
     if (tab && OccupyInternet.Tabs.tabs[tab.id] && OccupyInternet.Tabs.tabs[tab.id].visits) {
       var msg = OccupyInternet.phrases(OccupyInternet.Tabs.tabs[tab.id].visits, 'protester');
-      chrome.contextMenus.update(OccupyInternet.ContextMenu.protesters, {title : msg}, function() {});
+      chrome.contextMenus.update(OccupyInternet.ContextMenu.menus.protesters, {title : msg}, function() {});
     }
 
     jQuery.each(OccupyInternet.mode_types, function(k,v) {
-      if (OccupyInternet.ContextMenu['mode_'+ k]) {
-        chrome.contextMenus.update(OccupyInternet.ContextMenu['mode_'+ k], {checked : (OccupyInternet.mode() == k)}, function() {});
+      if (OccupyInternet.ContextMenu.menus['mode_'+ k]) {
+        chrome.contextMenus.update(OccupyInternet.ContextMenu.menus['mode_'+ k], {checked : (OccupyInternet.mode() == k)}, function() {});
       }
     });
   }

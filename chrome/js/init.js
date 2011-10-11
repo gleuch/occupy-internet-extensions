@@ -13,7 +13,7 @@
 var OccupyInternet = {
   mode_types : {
     peaceful : 'Calm and Peaceful',
-    mob : 'Loud and Crazy',
+    loud : 'Loud and Crazy',
     quiet : 'Quiet Time'
   },
   

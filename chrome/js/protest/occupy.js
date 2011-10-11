@@ -48,7 +48,7 @@ jQuery.extend(true, OccupyInternetPage, {
     if (OccupyInternetPage.mode == 'quiet') return;
 
     if (!OccupyInternetPage.gathered) {
-      jQuery('body').append(OccupyInternetPage.html.liberty_plaza);
+      jQuery('body').append(OccupyInternetPage.html.liberty_plaza).attr('title', OccupyInternetPage.phrase());
       OccupyInternetPage.gathered = true;
 
       for (var i=0; i<OccupyInternetPage.count; i++) {
@@ -61,7 +61,11 @@ jQuery.extend(true, OccupyInternetPage, {
   _hide_protest : function() {if (jQuery('#occupyinternet_plaza')) jQuery('#occupyinternet_plaza').hide();},
 
   _add_protester : function() {
-    jQuery('#occupyinternet_plaza').append(OccupyInternetPage.html.protester);
+    if (OccupyInternetPage.mode == 'peaceful') {
+      jQuery('#occupyinternet_plaza').append(OccupyInternetPage.html.peaceful_protester);
+    } else if (OccupyInternetPage.mode == 'loud') {
+      jQuery('#occupyinternet_plaza').append(OccupyInternetPage.html.loud_protester);
+    }
   },
   
   _remove_protester : function() {
@@ -80,6 +84,8 @@ jQuery.extend(true, OccupyInternetPage, {
     } else {
       var diff = (num - OccupyInternetPage.count);
       OccupyInternetPage.count = num;
+
+      jQuery('#occupyinternet_plaza').attr('title', OccupyInternetPage.phrase());
 
       for (var i=0; i<Math.abs(diff); i++) {
         if (diff > 0) {
@@ -103,8 +109,11 @@ jQuery.extend(true, OccupyInternetPage, {
     OccupyInternetPage.protest();
   },
 
+  phrase : function() {return OccupyInternetPage.count +' '+ (OccupyInternetPage.count != 1 ? 'protesters' : 'protester');},
+
   html : {
-    protester : '<span class="occupyinternet occupyinternet_protester">X</span>',
+    peaceful_protester : '<span class="occupyinternet occupyinternet_protester occupyinternet_protester_peaceful">X</span>',
+    loud_protester : '<span class="occupyinternet occupyinternet_protester occupyinternet_protester_loud">!!!</span>',
     liberty_plaza : '<div id="occupyinternet_plaza" class="occupyinternet"></div>',
     police : '',
     nets : ''
