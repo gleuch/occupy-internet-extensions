@@ -45,7 +45,7 @@ var OccupyInternet = {
   setMode : function(info) {
     var changed = false;
     jQuery.each(OccupyInternet.mode_types, function(k,v) {
-      if (OccupyInternet.ContextMenu['mode_'+ k] == info['menuItemId']) {
+      if (OccupyInternet.ContextMenu.menus['mode_'+ k] == info['menuItemId']) {
         OccupyInternet.mode(k);
         changed = true;
       }

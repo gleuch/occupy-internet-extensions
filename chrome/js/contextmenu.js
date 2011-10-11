@@ -29,7 +29,7 @@ OccupyInternet.ContextMenu = {
 
     jQuery.each(OccupyInternet.mode_types, function(k,v) {
       if (!OccupyInternet.ContextMenu.menus['mode_'+ k]) {
-        OccupyInternet.ContextMenu.menus['mode_'+ k] = chrome.contextMenus.create({title : v, checked : OccupyInternet.isMode(k), type : 'checkbox', contexts : ['all'], onclick : OccupyInternet.setMode}, function() {});
+        OccupyInternet.ContextMenu.menus['mode_'+ k] = chrome.contextMenus.create({title : v, checked : OccupyInternet.isMode(k), type : 'radio', contexts : ['all'], onclick : OccupyInternet.setMode}, function() {});
       }
     });
 
