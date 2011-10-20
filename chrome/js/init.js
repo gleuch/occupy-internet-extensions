@@ -11,6 +11,7 @@
 */
 
 var OccupyInternet = {
+  avatars : [],
   mode_types : {
     peaceful : 'Calm and Peaceful',
     loud : 'Loud and Crazy',

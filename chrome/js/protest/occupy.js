@@ -55,6 +55,7 @@ jQuery.extend(true, OccupyInternetPage, {
       OccupyInternetPage._add_logo();
       var count = OccupyInternetPage.count;
       if (OccupyInternetPage.mode == 'loud') {
+
         jQuery('#occupyinternet_plaza').addClass('occupyinternet_is_loud');
         count = (OccupyInternetPage.avatars.length < 10 ? OccupyInternetPage.avatars.length : 10);
         OccupyInternetPage.avatars.sort(function(){ return 0.5 - Math.random() });
@@ -102,13 +103,10 @@ jQuery.extend(true, OccupyInternetPage, {
       var diff = (num - OccupyInternetPage.count);
       OccupyInternetPage.count = num;
 
+      if (OccupyInternetPage.mode == 'loud') return;
+
       jQuery('#occupyinternet_plaza').removeClass('occupyinternet_is_loud');
       jQuery('#occupyinternet_logo').attr('title', OccupyInternetPage.phrase());
-
-      if (OccupyInternetPage.mode == 'loud') {
-        jQuery('#occupyinternet_plaza').addClass('occupyinternet_is_loud');
-        OccupyInternetPage.avatars.sort(function(){ return 0.5 - Math.random() });
-      }
 
       for (var i=0; i<Math.abs(diff); i++) {
         if (diff > 0) {

@@ -14,7 +14,7 @@
 OccupyInternet.API = {
   
   avatars : function(opts) {
-    var defaults = {success : function(msg) {eval('OccupyInternet.API._avatars('+ msg +');');}, error : function(a, b, c) {alert('e')}, data : {}},
+    var defaults = {success : function(msg) {eval('OccupyInternet.API._avatars('+ msg +');');}, error : function(a, b, c) {}, data : {}},
         requires = {url : localStorage.avatars_url, type : 'GET', dataType : 'text'}; // should be json, widget part is nightmare to make true json
 
     if (!opts) opts = {};
