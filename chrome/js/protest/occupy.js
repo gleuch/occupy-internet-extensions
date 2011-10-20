@@ -3,6 +3,7 @@ try {$.noConflict();} catch(e) {} // Play nice!
 
 if (typeof(OccupyInternetPage) == 'undefined') {
   var OccupyInternetPage = {
+    avatars : [],
     count : 0,
     mode : 'quiet',
     dev_mode : false,
@@ -13,7 +14,7 @@ if (typeof(OccupyInternetPage) == 'undefined') {
     get_url : 'http://api.occupyinter.net/site.json'
   };
 
-  jQuery('.occupyinternet').remove();
+  jQuery('.occupyinternet, #occupy-widget').remove();
 }
 
 
@@ -52,9 +53,15 @@ jQuery.extend(true, OccupyInternetPage, {
       OccupyInternetPage.gathered = true;
 
       OccupyInternetPage._add_logo();
+      var count = OccupyInternetPage.count;
+      if (OccupyInternetPage.mode == 'loud') {
+        jQuery('#occupyinternet_plaza').addClass('occupyinternet_is_loud');
+        count = (OccupyInternetPage.avatars.length < 10 ? OccupyInternetPage.avatars.length : 10);
+        OccupyInternetPage.avatars.sort(function(){ return 0.5 - Math.random() });
+      }
 
-      for (var i=0; i<OccupyInternetPage.count; i++) {
-        OccupyInternetPage._add_protester();
+      for (var i=0; i<count; i++) {
+        OccupyInternetPage._add_protester(i);
       }
     }
   },
@@ -67,13 +74,14 @@ jQuery.extend(true, OccupyInternetPage, {
     jQuery('#occupyinternet_logo').attr('title', 'OccupyInter.net - '+ OccupyInternetPage.phrase());
   },
 
-  _add_protester : function() {
+  _add_protester : function(i) {
     if (OccupyInternetPage.mode == 'peaceful') {
       setTimeout(function() {
         jQuery('#occupyinternet_plaza_area').append(OccupyInternetPage.html.peaceful_protester.replace(/\?rnd/, '?'+Math.floor(Math.random()*1000)));
       }, Math.floor(Math.random()*1500));
     } else if (OccupyInternetPage.mode == 'loud') {
-      jQuery('#occupyinternet_plaza_area').append(OccupyInternetPage.html.loud_protester);
+      var src = OccupyInternetPage.avatars[i].avatar, b = 10, l = left = (i*150)-50, z = (100+Math.floor(Math.random()*20));
+      jQuery('#occupyinternet_plaza_area').append(OccupyInternetPage.html.loud_protester.replace(/(\#\{src\})/m, src).replace(/(\#\{b\})/m, b).replace(/(\#\{l\})/m, l).replace(/(\#\{z\})/m, z) );
     }
   },
   
@@ -94,7 +102,13 @@ jQuery.extend(true, OccupyInternetPage, {
       var diff = (num - OccupyInternetPage.count);
       OccupyInternetPage.count = num;
 
+      jQuery('#occupyinternet_plaza').removeClass('occupyinternet_is_loud');
       jQuery('#occupyinternet_logo').attr('title', OccupyInternetPage.phrase());
+
+      if (OccupyInternetPage.mode == 'loud') {
+        jQuery('#occupyinternet_plaza').addClass('occupyinternet_is_loud');
+        OccupyInternetPage.avatars.sort(function(){ return 0.5 - Math.random() });
+      }
 
       for (var i=0; i<Math.abs(diff); i++) {
         if (diff > 0) {
@@ -122,7 +136,7 @@ jQuery.extend(true, OccupyInternetPage, {
 
   html : {
     peaceful_protester : '<span class="occupyinternet occupyinternet_protester occupyinternet_protester_peaceful"><img class="occupyinternet" src="'+ chrome.extension.getURL('images/protester16.gif') +'?rnd" title="" alt="" /></span>',
-    loud_protester : '<span class="occupyinternet occupyinternet_protester occupyinternet_protester_loud">!!!</span>',
+    loud_protester : '<img class="occupyinternet occupyinternet_protester occupyinternet_protester_loud" style="bottom: #{b}px !important; left: #{l}px !important; z-index: #{z} !important;" src="#{src}" />',
     logo : '<a href="http://occupyinter.net" target="_blank" class="occupyinternet occupyinternet_logo"><img class="occupyinternet" id="occupyinternet_logo" src="'+ chrome.extension.getURL('images/net_protester48.gif') +'" title="OccupyInter.net" alt="" /></a>',
     liberty_plaza : '<div id="occupyinternet_plaza" class="occupyinternet"><div class="occupyinternet" id="occupyinternet_plaza_area"></div></div>',
     police : '',

@@ -10,11 +10,26 @@
 
 */
 
+
 OccupyInternet.API = {
+  
+  avatars : function(opts) {
+    var defaults = {success : function(msg) {eval('OccupyInternet.API._avatars('+ msg +');');}, error : function(a, b, c) {alert('e')}, data : {}},
+        requires = {url : localStorage.avatars_url, type : 'GET', dataType : 'text'}; // should be json, widget part is nightmare to make true json
+
+    if (!opts) opts = {};
+    opts = jQuery.extend({}, defaults, opts, requires);
+
+    jQuery.ajax(opts);
+  },
+  
+  _avatars : function(msg) {
+    OccupyInternet.avatars = msg;
+  },
   
   update : function(opts) {
     var defaults = {success : function() {}, error : function() {}, data : {}},
-        requires = {url : localStorage.post_url, type : 'PUT', dataType : 'json'};
+        requires = {url : localStorage.post_url, type : 'POST', dataType : 'json'};
 
     if (!opts) opts = {};
     opts = jQuery.extend({}, defaults, opts, requires);

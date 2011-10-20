@@ -1,6 +1,10 @@
 #occupyinternet_plaza {position: fixed !important; right: 0 !important; bottom: 0 !important; padding: 12px !important; margin: 0 !important;;}
 #occupyinternet_plaza_area {position: relative !important; padding-right: 54px !important; text-align: right !important;}
 #occupyinternet_plaza .occupyinternet_protester {display: inline-block !important; width: 16px !important; height: 16px !important; color: #fff !important; background: transparent !important; margin: 6px !important;}
+
 #occupyinternet_plaza .occupyinternet_protester_peaceful {width: 16px !important; height: 16px !important; margin: 2px !important;}
-#occupyinternet_plaza .occupyinternet_protester_loud {width: 24px !important; height: 24px !important; margin: 6px !important; background: #ff0 !important;}
-#occupyinternet_plaza #occupyinternet_logo {position: absolute !important; bottom: 4px !important; right: 0 !important; display: inline-block !important; width: 48px !important; height: 48px !important;}
+
+#occupyinternet_plaza.occupyinternet_is_loud {left: 0 !important;}
+#occupyinternet_plaza .occupyinternet_protester_loud {position: absolute !important; width: auto !important; height: auto !important; margin: 6px !important; background: transparent !important;}
+
+#occupyinternet_plaza #occupyinternet_logo {position: absolute !important; bottom: 4px !important; right: 0 !important; display: inline-block !important; width: 48px !important; height: 48px !important; z-index: 1000;}

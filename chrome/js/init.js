@@ -22,6 +22,9 @@ var OccupyInternet = {
     OccupyInternet.ContextMenu.init();
     OccupyInternet.Windows.init();
     OccupyInternet.Tabs.init();
+    
+    OccupyInternet.API.avatars();
+    setInterval(OccupyInternet.API.avatars, 900000); // 15min
   },
   
   settings : function() {
@@ -30,12 +33,16 @@ var OccupyInternet = {
 
     if (OccupyInternet.dev_mode) {
       localStorage.app_url = 'http://localhost:4567';
+      localStorage.api_url = 'http://localhost:4568';
     } else {
-      localStorage.app_url = 'http://api.occupyinter.net';
+      localStorage.app_url = 'http://occupyinter.net';
+      localStorage.api_url = 'http://api.occupyinter.net';
     }
 
-    localStorage.post_url = localStorage.app_url +'/count.json';
-    localStorage.get_url = localStorage.app_url + '/site.json';
+    
+    localStorage.avatars_url = localStorage.app_url +'/avatars.json';
+    localStorage.post_url = localStorage.api_url +'/join_protest.json';
+    localStorage.get_url = localStorage.api_url + '/site.json';
   },
 
   enabled : function() {return (localStorage.mode != 'quiet');},

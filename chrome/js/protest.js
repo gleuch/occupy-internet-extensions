@@ -50,7 +50,7 @@ OccupyInternet.Protest = {
     OccupyInternet.Tabs.tabs[tab.id].injected = true;
 
     var count = OccupyInternet.Tabs.tabs[tab.id].visits,
-        code = "OccupyInternetPage.count = "+ count +";OccupyInternetPage.fetched = true; OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"';";
+        code = "OccupyInternetPage.count = "+ count +";OccupyInternetPage.avatars = "+ jQuery.toJSON(OccupyInternet.avatars) +";OccupyInternetPage.fetched = true; OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"';";
 
     // Additional customizations
     if (!!OccupyInternet.dev_mode) code += "OccupyInternetPage.dev_mode = true;";
@@ -64,7 +64,7 @@ OccupyInternet.Protest = {
   },
 
   update_mode : function(tabid) {
-    var code = "if (typeof(OccupyInternetPage) != 'undefined') {OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"'; OccupyInternetPage.switch_mode();}";
+    var code = "if (typeof(OccupyInternetPage) != 'undefined') {OccupyInternetPage.avatars = "+ jQuery.toJSON(OccupyInternet.avatars) +";OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"'; OccupyInternetPage.switch_mode();}";
     chrome.tabs.executeScript(parseInt(tabid), {code:code}, function() {});
   },
   
