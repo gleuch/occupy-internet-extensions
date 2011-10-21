@@ -15,8 +15,8 @@ OccupyInternet.ContextMenu = {
   
   init : function() {
     OccupyInternet.ContextMenu.create();
-    OccupyInternet.ContextMenu.menus.container.attr('hidden', 'false');
-    OccupyInternet.ContextMenu.menus.separator1.attr('hidden', 'false');
+    OccupyInternet.ContextMenu.menus.container.attr('hidden', 'true');
+    OccupyInternet.ContextMenu.menus.separator1.attr('hidden', 'true');
   },
 
   create : function(tab) {  
@@ -28,17 +28,23 @@ OccupyInternet.ContextMenu = {
     if (!OccupyInternet.ContextMenu.menus.mode_quiet) OccupyInternet.ContextMenu.menus.mode_quiet = jQuery('#occupyinternet_menu_mode_quiet');
   },
   
+  show : function() {
+    OccupyInternet.ContextMenu.menus.container.attr('hidden', 'false');
+    OccupyInternet.ContextMenu.menus.separator1.attr('hidden', 'false');
+  },
+
   remove : function() {
-    OccupyInternet.ContextMenu.menus.container.attr('disabled', 'true').attr('hidden', 'true');
-    OccupyInternet.ContextMenu.menus.separator1.attr('disabled', 'true').attr('hidden', 'true');
+    OccupyInternet.ContextMenu.menus.container.attr('hidden', 'true');
+    OccupyInternet.ContextMenu.menus.separator1.attr('hidden', 'true');
   },
   
   toggle : function(tab) {
-    if (!tab) tab = {url : ''};
+    if (!tab) return;
 
-    if (tab['url'].match(/^(http)/)) {
+    if (tab && tab.currentURI && tab.currentURI.spec.match(/^(http)/)) {
       OccupyInternet.ContextMenu.create(tab);
       OccupyInternet.ContextMenu.update(tab);
+      OccupyInternet.ContextMenu.show();
     } else {
       OccupyInternet.ContextMenu.remove();
     }
@@ -46,11 +52,12 @@ OccupyInternet.ContextMenu = {
   
   update : function(tab) {
     OccupyInternet.ContextMenu.create(); // ensure
+    var tabid = OccupyInternet.Tabs.id(tab);
 
-    if (tab && OccupyInternet.Tabs.tabs[tab.id] && OccupyInternet.Tabs.tabs[tab.id].visits) {
-    //   var msg = OccupyInternet.phrases(OccupyInternet.Tabs.tabs[tab.id].visits, 'protester');
-    //   chrome.contextMenus.update(OccupyInternet.ContextMenu.menus.protesters, {title : msg}, function() {});
-    // }
+    if (tab && OccupyInternet.Tabs.tabs[tabid] && OccupyInternet.Tabs.tabs[tabid].visits) {
+      var msg = OccupyInternet.phrases(OccupyInternet.Tabs.tabs[tabid].visits, 'protester');
+      jQuery('#occupyinternet_menu_protesters').attr('label', msg);
+    }
 
     jQuery.each(OccupyInternet.mode_types, function(k,v) {
       if (OccupyInternet.ContextMenu.menus['mode_'+ k]) {

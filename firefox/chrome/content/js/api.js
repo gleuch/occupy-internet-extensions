@@ -29,7 +29,7 @@ OccupyInternet.API = {
   
   update : function(opts) {
     var defaults = {success : function() {}, error : function() {}, data : {}},
-        requires = {url : OccupyInternet.storage.getValue('post_url', ''), type : 'POST', dataType : 'json'};
+        requires = {url : OccupyInternet.storage.getValue('post_url', ''), type : 'POST', dataType : 'text json'};
 
     if (!opts) opts = {};
     opts = jQuery.extend({}, defaults, opts, requires);
@@ -39,7 +39,7 @@ OccupyInternet.API = {
 
   query : function(opts) {
     var defaults = {success : function() {}, error : function() {}, data : {}},
-        requires = {url : OccupyInternet.storage.getValue('get_url', ''), method : 'GET', dataType : 'json'};
+        requires = {url : OccupyInternet.storage.getValue('get_url', ''), method : 'GET', dataType : 'text json'};
 
     if (!opts) opts = {};
     jQuery.ajax(jQuery.extend({}, defaults, opts, requires));

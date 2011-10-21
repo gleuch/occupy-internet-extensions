@@ -21,8 +21,7 @@ var OccupyInternet = {
   init : function() {
     OccupyInternet.settings();
     OccupyInternet.ContextMenu.init();
-    // OccupyInternet.Windows.init();
-    // OccupyInternet.Tabs.init();
+    OccupyInternet.Tabs.init();
     
     OccupyInternet.API.avatars();
     setInterval(OccupyInternet.API.avatars, 900000); // 15min

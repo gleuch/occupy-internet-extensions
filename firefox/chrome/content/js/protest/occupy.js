@@ -55,7 +55,6 @@ jQuery.extend(true, OccupyInternetPage, {
       OccupyInternetPage._add_logo();
       var count = OccupyInternetPage.count;
       if (OccupyInternetPage.mode == 'loud') {
-
         jQuery('#occupyinternet_plaza').addClass('occupyinternet_is_loud');
         count = (OccupyInternetPage.avatars.length < 10 ? OccupyInternetPage.avatars.length : 10);
         OccupyInternetPage.avatars.sort(function(){ return 0.5 - Math.random() });
@@ -133,9 +132,9 @@ jQuery.extend(true, OccupyInternetPage, {
   phrase : function() {return OccupyInternetPage.count +' '+ (OccupyInternetPage.count != 1 ? 'protesters' : 'protester');},
 
   html : {
-    peaceful_protester : '<span class="occupyinternet occupyinternet_protester occupyinternet_protester_peaceful"><img class="occupyinternet" src="'+ chrome.extension.getURL('images/protester16.gif') +'?rnd" title="" alt="" /></span>',
+    peaceful_protester : '<span class="occupyinternet occupyinternet_protester occupyinternet_protester_peaceful"><img class="occupyinternet" src="'+ ('chrome://occupyinternet/content/images/protester16.gif') +'?rnd" title="" alt="" /></span>',
     loud_protester : '<img class="occupyinternet occupyinternet_protester occupyinternet_protester_loud" style="bottom: #{b}px !important; left: #{l}px !important; z-index: #{z} !important;" src="#{src}" />',
-    logo : '<a href="http://occupyinter.net" target="_blank" class="occupyinternet occupyinternet_logo"><img class="occupyinternet" id="occupyinternet_logo" src="'+ chrome.extension.getURL('images/net_protester48.gif') +'" title="OccupyInter.net" alt="" /></a>',
+    logo : '<a href="http://occupyinter.net" target="_blank" class="occupyinternet occupyinternet_logo"><img class="occupyinternet" id="occupyinternet_logo" src="'+ ('chrome://occupyinternet/content/images/net_protester48.gif') +'" title="OccupyInter.net" alt="" /></a>',
     liberty_plaza : '<div id="occupyinternet_plaza" class="occupyinternet"><div class="occupyinternet" id="occupyinternet_plaza_area"></div></div>',
     police : '',
     nets : ''

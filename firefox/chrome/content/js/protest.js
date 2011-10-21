@@ -18,18 +18,20 @@ OccupyInternet.Protest = {
   },
   
   occupy : function(tab) {
-    if (!OccupyInternet.Tabs.tabs[tab.id].checked) {
-      OccupyInternet.Tabs.tabs[tab.id].checked = true;
+    var tabid = OccupyInternet.Tabs.id(tab);
 
+    if (!OccupyInternet.Tabs.tabs[tabid].checked) {
+      OccupyInternet.Tabs.tabs[tabid].checked = true;
+    
       var opts = {
         success : function(msg) {OccupyInternet.Protest._occupy_success(tab, msg);},
         error : function(msg) {OccupyInternet.Protest._occupy_error(tab, msg);},
         data : {}
       };
-
-      opts.data.url = tab['url'];
+    
+      opts.data.url = tab.currentURI.spec
       opts.data.uuid = OccupyInternet.storage.getValue('uuid', '');
-
+    
       OccupyInternet.API.update(opts);
     } else {
       OccupyInternet.Protest.inject(tab);
@@ -37,39 +39,45 @@ OccupyInternet.Protest = {
   },
   
   _occupy_success : function(tab, msg) {
-    OccupyInternet.Tabs.tabs[tab.id].visits = msg.visits;
+    var tabid = OccupyInternet.Tabs.id(tab);
+
+    OccupyInternet.Tabs.tabs[tabid].visits = msg.visits;
     OccupyInternet.ContextMenu.update(tab);
     OccupyInternet.Protest.inject(tab);
   },
   _occupy_error : function(tab, msg) {
-    console.error('OccupyInter.net Error: Could not fetch data ('+ OccupyInternet.domain(tab['url']) +')');
+    console.error('OccupyInter.net Error: Could not fetch data ('+ OccupyInternet.domain(tab.currentURI.spec) +')');
   },
 
   inject : function(tab) {
-    if (OccupyInternet.Tabs.tabs[tab.id].injected) return false;
-    OccupyInternet.Tabs.tabs[tab.id].injected = true;
+    var tabid = OccupyInternet.Tabs.id(tab);
 
-    var count = OccupyInternet.Tabs.tabs[tab.id].visits,
+    if (OccupyInternet.Tabs.tabs[tabid].injected) return false;
+    OccupyInternet.Tabs.tabs[tabid].injected = true;
+
+    var count = OccupyInternet.Tabs.tabs[tabid].visits,
         code = "OccupyInternetPage.count = "+ count +";OccupyInternetPage.avatars = "+ jQuery.toJSON(OccupyInternet.avatars) +";OccupyInternetPage.fetched = true; OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"';";
 
     // Additional customizations
     if (!!OccupyInternet.dev_mode) code += "OccupyInternetPage.dev_mode = true;";
     code += "OccupyInternetPage.init();";
 
-    chrome.tabs.insertCSS(tab.id, {file:'css/protest/occupy.css'}, function() {});
-    chrome.tabs.executeScript(tab.id, {file:'js/jquery.1.6.1.min.js'}, function() {});
-    chrome.tabs.executeScript(tab.id, {file:'js/protest/occupy.js'}, function() {
-      chrome.tabs.executeScript(tab.id, {code:code}, function() {});
+    OccupyInternet.Tabs.insertCSS(tab, 'css/protest/occupy.css', function() {});
+    OccupyInternet.Tabs.insertJS(tab, 'js/jquery.1.6.1.min.js', function() {});
+    OccupyInternet.Tabs.insertJS(tab, 'js/protest/occupy.js', function() {
+      setTimeout(function() {
+        OccupyInternet.Tabs.executeScript(tab, code, function() {});
+      }, 500);
     });
   },
 
-  update_mode : function(tabid) {
+  update_mode : function(tab) {
     var code = "if (typeof(OccupyInternetPage) != 'undefined') {OccupyInternetPage.avatars = "+ jQuery.toJSON(OccupyInternet.avatars) +";OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"'; OccupyInternetPage.switch_mode();}";
-    chrome.tabs.executeScript(parseInt(tabid), {code:code}, function() {});
+    OccupyInternet.Tabs(tab, {code:code}, function() {});
   },
   
   customize : function() {
-    chrome.tabs.create({selected:true, url:OccupyInternet.storage.getValue('app_url', ''});
+    // chrome.tabs.create({selected:true, url:OccupyInternet.storage.getValue('app_url', '')});
   }
 
 };
