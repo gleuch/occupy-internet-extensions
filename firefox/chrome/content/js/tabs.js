@@ -31,6 +31,18 @@ OccupyInternet.Tabs = {
     }
   },
   
+  get : function(tabid) {
+    if (!tabid) return null;
+
+    var num = gBrowser.browsers.length, i, tab, id;
+    for (i=0; i<num; i++) {
+      tab = gBrowser.getBrowserAtIndex(i);
+      try {if (tabid == tab.contentDocument.tab_id) return tab;} catch(e) {}
+    }
+    
+    return null;
+  },
+  
   observe : function() {
     gBrowser.tabContainer.addEventListener("TabAttrModified", OccupyInternet.Tabs.onUpdate, false);
     gBrowser.tabContainer.addEventListener("TabSelect", OccupyInternet.Tabs.onSelected, false);
@@ -97,6 +109,7 @@ OccupyInternet.Tabs = {
   },
 
   executeScript : function(tab, code, fn) {
+    if (!tab) return false;
     var doc = tab.contentDocument, t = doc.createElement('script');
     t.type = 'text/javascript'; t.innerHTML = code;
     doc.head.appendChild(t);

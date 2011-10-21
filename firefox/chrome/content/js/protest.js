@@ -73,11 +73,12 @@ OccupyInternet.Protest = {
 
   update_mode : function(tab) {
     var code = "if (typeof(OccupyInternetPage) != 'undefined') {OccupyInternetPage.avatars = "+ jQuery.toJSON(OccupyInternet.avatars) +";OccupyInternetPage.mode = '"+ OccupyInternet.mode() +"'; OccupyInternetPage.switch_mode();}";
-    OccupyInternet.Tabs(tab, {code:code}, function() {});
+    OccupyInternet.Tabs.executeScript(tab, code, function() {});
   },
   
   customize : function() {
-    // chrome.tabs.create({selected:true, url:OccupyInternet.storage.getValue('app_url', '')});
+    gBrowser.selectedTab = gBrowser.addTab( OccupyInternet.storage.getValue('app_url', '') );
+    return false;
   }
 
 };

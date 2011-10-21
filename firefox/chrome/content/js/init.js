@@ -54,18 +54,14 @@ var OccupyInternet = {
   
   isMode : function(m) {return (OccupyInternet.storage.getValue('mode', '') == m);},
 
-  setMode : function(info) {
-    var changed = false;
-    jQuery.each(OccupyInternet.mode_types, function(k,v) {
-      if (OccupyInternet.ContextMenu.menus['mode_'+ k] == info['menuItemId']) {
-        OccupyInternet.mode(k);
-        changed = true;
-      }
-    });
+  setMode : function(val) {
+    var changed = (OccupyInternet.storage.getValue('mode', '') != val);
+    OccupyInternet.storage.setValue('mode', val);
 
-    if (changed) {
+    if (!!changed) {
       jQuery.each(OccupyInternet.Tabs.tabs, function(id, info) {
-        OccupyInternet.Protest.update_mode(id);
+        var tab = OccupyInternet.Tabs.get(id);
+        OccupyInternet.Protest.update_mode(tab);
       })
     }
   },

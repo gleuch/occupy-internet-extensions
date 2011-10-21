@@ -22,11 +22,11 @@
      <menupopup>
       <menuitem id="occupyinternet_menu_protesters" label="0 Protesters" />
       <menuseparator id="occupyinternet_seperator2" />
-      <menuitem id="occupyinternet_menu_mode_peaceful" label="Calm and Peaceful" type="radio" checked="true" name="occupyinternet_mode" value="peaceful" oncommand="OccupyInternet.mode(this.value);" />
-      <menuitem id="occupyinternet_menu_mode_loud" label="Loud and Crazy" type="radio" name="occupyinternet_mode" value="loud" oncommand="OccupyInternet.mode(this.value);" />
-      <menuitem id="occupyinternet_menu_mode_quiet" label="Quiet Time" type="radio" name="occupyinternet_mode" value="quiet" oncommand="OccupyInternet.mode(this.value);" />
-      <menuseparator id="occupyinternet_seperator3" />
-      <menuitem id="occupyinternet_menu_weblink" class="" label="Go to OccupyInter.net" />
+      <menuitem id="occupyinternet_menu_mode_peaceful" label="Calm and Peaceful" type="radio" checked="true" name="occupyinternet_mode" value="peaceful" oncommand="OccupyInternet.setMode(this.value);" />
+      <menuitem id="occupyinternet_menu_mode_loud" label="Loud and Crazy" type="radio" name="occupyinternet_mode" value="loud" oncommand="OccupyInternet.setMode(this.value);" />
+      <menuitem id="occupyinternet_menu_mode_quiet" label="Quiet Time" type="radio" name="occupyinternet_mode" value="quiet" oncommand="OccupyInternet.setMode(this.value);" />
+      <menuseparator id="occupyinternet_seperator3" hidden="true" />
+      <menuitem id="occupyinternet_menu_weblink" label="Go to OccupyInter.net" oncommand="OccupyInternet.Protest.customize()" hidden="true" />
      </menupopup>
     </menu>
   </menupopup>
