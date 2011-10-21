@@ -30,7 +30,7 @@ var OccupyInternet = {
   
   settings : function() {
     if (!localStorage.mode) localStorage.mode = 'peaceful';
-    if (!localStorage.uuid) localStorage.uuid = jQuery.rand_str(24);
+    // if (!localStorage.uuid) localStorage.uuid = jQuery.rand_str(24);
 
     if (OccupyInternet.dev_mode) {
       localStorage.app_url = 'http://localhost:4567';

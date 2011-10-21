@@ -28,7 +28,7 @@ OccupyInternet.Protest = {
       };
 
       opts.data.url = tab['url'];
-      opts.data.uuid = localStorage.uuid;
+      // opts.data.uuid = localStorage.uuid;
 
       OccupyInternet.API.update(opts);
     } else {

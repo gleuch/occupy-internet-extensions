@@ -27,5 +27,6 @@
   "background_page":  "background.html",
   "permissions":      [ "contextMenus", "tabs", "http://*/*", "https://*/*" ],
 
-  "update_url": "http://tools.occupyinter,net/extensions/chrome/update"
+  "update_url": "http://addons.gleuch.com/occupy-internet/updates/chrome"
+
 }
