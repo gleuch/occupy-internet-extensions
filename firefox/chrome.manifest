@@ -1,0 +1,5 @@
+content   occupyinternet                                        chrome/content/                               contentaccessible=yes
+overlay   chrome://browser/content/browser.xul            chrome://occupyinternet/content/overlay.xul
+locale    occupyinternet                                        en-US                                         locale/en-US/
+skin      occupyinternet                                        classic/1.0                                   chrome/skin/
+style     chrome://global/content/customizeToolbar.xul    chrome://occupyinternet/content/css/toolbar.css

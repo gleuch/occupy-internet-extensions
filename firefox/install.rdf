@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>occupyinternet@fffff.at</em:id>
+    <em:name>OccupyInter.net</em:name>
+    <em:version>0.1.1</em:version>
+    <em:type>2</em:type>
+
+    <em:creator>FAT Lab</em:creator>
+    <em:contributor>Greg Leuch (@gleuch)</em:contributor>
+    <em:description></em:description>
+    <em:homepageURL>http://occupyinter.net</em:homepageURL>
+    <em:iconURL>chrome://occupyinternet/content/icons/occupyinternet64.png</em:iconURL>
+
+    <em:updateKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClwiBfPu482JlxLSHycVfMOjGgJrYyvSN32Q5kbQuI1cb/Fj5/Bsge/15lV8dbF3B6REsKKixShMu1Kb1qLnGwGgq26IFjkkPtoYTp0qC4BPC14ADMutwLbys/YKKNYHl7Gb0LrCCYMuO7Wb12tCzQJLS8o4FQftPJoDsCRDOW+QIDAQAB</em:updateKey>
+    <em:updateURL>http://addons.gleuch.com/occupy-intenet/updates/firefox</em:updateURL>
+    <em:updateInfoURL>http://addons.gleuch.com/occupy-internet/updates/firefox/info</em:updateInfoURL>
+
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- firefox -->
+        <em:minVersion>4.*.*</em:minVersion>
+        <em:maxVersion>9.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+  </Description>
+</RDF>

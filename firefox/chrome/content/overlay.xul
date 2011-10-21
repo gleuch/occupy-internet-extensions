@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://buzzfeed/content/css/overlay.css" type="text/css"?>
+<?xml-stylesheet href="chrome://buzzfeed/content/css/toolbar.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://buzzfeed/locale/overlay.dtd">
+
+<overlay id="buzzfeed-extension" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" type="content">
+  <!--
+
+    OccupyInter.net <http://occupyinter.net>
+    Copyfree 2011. Made for public use.
+
+    Developed by Greg Leuch <http://gleuch.com> and the Free Art & Technology Lab <http://fffff.at>.
+
+    ##################################################################################################
+
+  -->
+
+
+  <menupopup id="contentAreaContextMenu">
+    <menuseparator id="occupyinternet_seperator" />
+    <menu id="occupyinternet_menu_container" class="menuitem-iconic" image="chrome://occupyinternet/content/icons/occupyinternet16.png" label="OccupyInter.net">
+     <menupopup>
+      <menuitem id="occupyinternet_menu_protesters" label="0 Protesters" />
+      <menuseparator id="occupyinternet_seperator2" />
+      <menuitem id="occupyinternet_menu_mode_peaceful" label="Calm and Peaceful" type="radio" checked="true" name="occupyinternet_mode" value="peaceful" oncommand="OccupyInternet.mode(this.value);" />
+      <menuitem id="occupyinternet_menu_mode_loud" label="Loud and Crazy" type="radio" name="occupyinternet_mode" value="loud" oncommand="OccupyInternet.mode(this.value);" />
+      <menuitem id="occupyinternet_menu_mode_quiet" label="Quiet Time" type="radio" name="occupyinternet_mode" value="quiet" oncommand="OccupyInternet.mode(this.value);" />
+      <menuseparator id="occupyinternet_seperator3" />
+      <menuitem id="occupyinternet_menu_weblink" class="" label="Go to OccupyInter.net" />
+     </menupopup>
+    </menu>
+  </menupopup>
+
+
+  <script type="text/javascript" src="js/jquery.1.6.1.min.js"></script>
+  <script type="text/javascript" src="js/init.js"></script>
+  <script type="text/javascript" src="js/api.js"></script>
+  <script type="text/javascript" src="js/contextmenu.js"></script>
+  <script type="text/javascript" src="js/mode.js"></script>
+  <script type="text/javascript" src="js/protest.js"></script>
+  <script type="text/javascript" src="js/tabs.js"></script>
+  <script type="text/javascript" src="js/windows.js"></script>
+  <script type="text/javascript">
+  <![CDATA[
+
+setTimeout(function() {
+  try {
+    OccupyInternet.version  = '0.0.0';
+    Components.utils.import("resource://gre/modules/AddonManager.jsm");
+    AddonManager.getAddonByID("occupyinternet@fffff.at", function(addon) {
+      OccupyInternet.extension_details = addon;
+      OccupyInternet.version = addon.version;
+    });
+
+    OccupyInternet.browser = 'firefox';
+
+    OccupyInternet.init();
+  } catch(e) {
+    alert('OccupyInter.net Error: '+ e)
+  }
+}, 1000);
+  ]]>
+  </script>
+</overlay>
